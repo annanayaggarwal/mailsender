@@ -177,7 +177,7 @@ Anshika Khurana<br>
   let info = await transporter.sendMail({
     from: '"Factorykaam" <anshika@factorykaam.com>',
     to: email,
-    cc: ["annanay@factorykaam.com","kshitij@factorykaam.com","ridhi@factorykaam.com"],
+    cc: ["annanay@factorykaam.com","kshitij@factorykaam.com","ridhi@factorykaam.com","anshika@factorykaam.com"],
     subject: subject,
     html: emailHtml,
     attachments: [
