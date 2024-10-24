@@ -29,101 +29,101 @@ function convertHtmlToPdf(htmlContent, options = {}) {
 }
 
 function generateHtmlContent(name, position, start_date) {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letter of Intent</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.8;
-            font-size: 16px;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .content {
-            padding: 40px;
-            flex-grow: 1;
-        }
-        h2 {
-            color: #333;
-            text-align: center;
-            font-size: 28px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-        p {
-            margin-bottom: 25px;
-        }
-        ul {
-            margin-bottom: 25px;
-            padding-left: 40px;
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .date {
-            text-align: right;
-            margin-bottom: 50px;
-            font-size: 18px;
-        }
-        .footer {
-            padding: 10px 40px;
-            font-size: 12px;
-            margin-top: auto;
-        }
-        .company-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 40px;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <div class="logo">
-            <img src="https://media.licdn.com/dms/image/v2/C510BAQEKkTnNRYLztA/company-logo_200_200/company-logo_200_200/0/1631403389130/skh_emerge_logo?e=2147483647&v=beta&t=QtzqsQ8Fnpz4Q95ZwNgyLqtPilv-8iIQ5AeNVPLeTic" alt="Company Logo" style="max-width: 250px; height: auto;"/>
-        </div>
+    return `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Letter of Intent</title>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              line-height: 1.8;
+              font-size: 16px;
+              margin: 0;
+              padding: 0;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+          }
+          .content {
+              padding: 40px;
+              flex-grow: 1;
+          }
+          h2 {
+              color: #333;
+              text-align: center;
+              font-size: 28px;
+              margin-top: 40px;
+              margin-bottom: 40px;
+          }
+          p {
+              margin-bottom: 25px;
+          }
+          ul {
+              margin-bottom: 25px;
+              padding-left: 40px;
+          }
+          .logo {
+              text-align: center;
+              margin-bottom: 50px;
+          }
+          .date {
+              text-align: right;
+              margin-bottom: 50px;
+              font-size: 18px;
+          }
+          .footer {
+              padding: 10px 40px;
+              font-size: 12px;
+              margin-top: auto;
+          }
+          .company-name {
+              font-size: 20px;
+              font-weight: bold;
+              margin-top: 40px;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="content">
+          <div class="logo">
+              <img src="https://media.licdn.com/dms/image/v2/C510BAQEKkTnNRYLztA/company-logo_200_200/company-logo_200_200/0/1631403389130/skh_emerge_logo?e=2147483647&v=beta&t=QtzqsQ8Fnpz4Q95ZwNgyLqtPilv-8iIQ5AeNVPLeTic" alt="Company Logo" style="max-width: 250px; height: auto;"/>
+          </div>
+        
+          <h2>Sub- Letter of Intent</h2>
+          
+          <p>Dear <strong>${name}</strong>,</p>
+          
+          <p>This is with reference to your application and subsequent interview you had with us. We have pleasure in offering you an appointment as <strong>${position}</strong> in our organization on the terms and conditions as discussed and agreed mutually at the time of interview.</p>
+          
+          <p>You are advised to join your duties on <strong>${start_date}</strong> as per below mentioned details:-</p>
+          
+          <p>You are also advised to submit the following original documents along with one set of photocopy of certificates to us at the earliest or latest at the time of joining the duties.</p>
+          
+          <ul>
+              <li>Copies of educational & professional certificates</li>
+              <li>Four recent passport size photographs, Pan No and address proof.</li>
+          </ul>
+          
+          <p>This appointment is subject to your being found medically fit, a positive background verification check and terms as agreed at the time of interview.</p>
+          
+          <p>Please intimate your acceptance by signing and returning the duplicate copy of the letter.</p>
+          
+          <p>We look forward to having you among us in Krishna Group.</p>
+          
+          <p class="company-name">SKH Group</p>
+      </div>
       
-        <h2>Sub- Letter of Intent</h2>
-        
-        <p>Dear <strong>${name}</strong>,</p>
-        
-        <p>This is with reference to your application and subsequent interview you had with us. We have pleasure in offering you an appointment as <strong>${position}</strong> in our organization on the terms and conditions as discussed and agreed mutually at the time of interview.</p>
-        
-        <p>You are advised to join your duties on <strong>${start_date}</strong> as per below mentioned details:-</p>
-        
-        <p>You are also advised to submit the following original documents along with one set of photocopy of certificates to us at the earliest or latest at the time of joining the duties.</p>
-        
-        <ul>
-            <li>Copies of educational & professional certificates</li>
-            <li>Four recent passport size photographs, Pan No and address proof.</li>
-        </ul>
-        
-        <p>This appointment is subject to your being found medically fit, a positive background verification check and terms as agreed at the time of interview.</p>
-        
-        <p>Please intimate your acceptance by signing and returning the duplicate copy of the letter.</p>
-        
-        <p>We look forward to having you among us in Krishna Group.</p>
-        
-        <p class="company-name">SKH Group</p>
-    </div>
-    
-    <div class="footer">
-        <p>*Since this is a digitally generated document, signature and stamp are not required.</p>
-        <p>*Appointment letter containing details about CTC will be handed over to you on joining the plant</p>
-    </div>
-</body>
-</html>
-  `;
-}
+      <div class="footer">
+          <p>*Since this is a digitally generated document, signature and stamp are not required.</p>
+          <p>*Appointment letter containing details about CTC will be handed over to you on joining the plant</p>
+      </div>
+  </body>
+  </html>
+    `;
+  }
 
 const options = {
   format: 'A4',
@@ -160,7 +160,7 @@ async function sendEmail(to, email, subject, name, position, start_date, pdfBuff
   const emailHtml = `Dear ${name},<br><br>
 We are delighted to inform you that you have been selected for the position of <b>${position}</b> in SKH Group.<br><br>
 Further, the Appointment letter will be issued to you on the date of joining the SKH plant, which will contain the entire break up of your salary structure.<br><br>
-<b>Your official Start Date will be ${start_date},2024</b><br><br>
+<b>Your official Start Date will be ${start_date}</b><br><br>
 ${coordinator && coordinator_contact ? 
   `The Name of the SKH coordinator along with their contact number is mentioned below:<br><br>
   Name: ${coordinator}<br>
@@ -177,7 +177,7 @@ Anshika Khurana<br>
   let info = await transporter.sendMail({
     from: '"Factorykaam" <anshika@factorykaam.com>',
     to: email,
-    cc: ["annanay@factorykaam.com","ridhi@factorykaam.com","kshitij@factorykaam.com","anshika@factorykaam.com"],
+    cc: ["annanay@factorykaam.com","kshitij@factorykaam.com","ridhi@factorykaam.com"],
     subject: subject,
     html: emailHtml,
     attachments: [
@@ -188,6 +188,7 @@ Anshika Khurana<br>
       }
     ]
   });
+
 
   console.log(`Email sent to ${to}: ${info.messageId}`);
 }
