@@ -15,28 +15,18 @@ app.use(express.json());
 const upload = multer({ dest: 'uploads/' });
 
 function convertHtmlToPdf(htmlContent, options = {}) {
-    return new Promise((resolve, reject) => {
-      const pdfOptions = {
-        ...options,
-        timeout: 30000,
-        childProcessOptions: {
-          env: {
-            OPENSSL_CONF: '/dev/null',
-          },
-        }
-      };
-  
-      pdf.create(htmlContent, pdfOptions).toBuffer((error, buffer) => {
-        if (error) {
-          console.error('Error generating PDF:', error);
-          reject(error);
-        } else {
-          console.log('PDF generated successfully in memory');
-          resolve(buffer);
-        }
-      });
+  return new Promise((resolve, reject) => {
+    pdf.create(htmlContent, options).toBuffer((error, buffer) => {
+      if (error) {
+        console.error('Error generating PDF:', error);
+        reject(error);
+      } else {
+        console.log('PDF generated successfully in memory');
+        resolve(buffer);
+      }
     });
-  }
+  });
+}
 
 function generateHtmlContent(name, position, start_date) {
     return `
@@ -47,63 +37,52 @@ function generateHtmlContent(name, position, start_date) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Letter of Intent</title>
       <style>
-          @page {
-              size: A4 portrait;
-              margin: 0;
-          }
-          * {
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-          }
           body {
               font-family: Arial, sans-serif;
-              line-height: 1.4;
-              font-size: 12px;
-              width: 210mm;
-              height: 297mm;
-              padding: 20px;
-              position: relative;
-              background: white;
+              line-height: 1.8;
+              font-size: 16px;
+              margin: 0;
+              padding: 0;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
           }
           .content {
-              padding: 10px;
+              padding: 40px;
+              flex-grow: 1;
           }
           h2 {
               color: #333;
               text-align: center;
-              font-size: 20px;
-              margin: 15px 0;
+              font-size: 28px;
+              margin-top: 40px;
+              margin-bottom: 40px;
           }
           p {
-              margin-bottom: 10px;
+              margin-bottom: 25px;
           }
           ul {
-              margin: 10px 0;
-              padding-left: 20px;
+              margin-bottom: 25px;
+              padding-left: 40px;
           }
           .logo {
               text-align: center;
-              margin-bottom: 20px;
+              margin-bottom: 50px;
           }
-          .logo img {
-              max-width: 150px;
-              height: auto;
+          .date {
+              text-align: right;
+              margin-bottom: 50px;
+              font-size: 18px;
           }
           .footer {
-              position: absolute;
-              bottom: 20px;
-              left: 20px;
-              right: 20px;
-              font-size: 10px;
+              padding: 10px 40px;
+              font-size: 12px;
+              margin-top: auto;
           }
           .company-name {
-              font-size: 16px;
+              font-size: 20px;
               font-weight: bold;
-              margin-top: 20px;
-          }
-          strong {
-              font-weight: bold;
+              margin-top: 40px;
           }
       </style>
   </head>
@@ -112,7 +91,7 @@ function generateHtmlContent(name, position, start_date) {
           <div class="logo">
               <img src="https://media.licdn.com/dms/image/v2/C510BAQEKkTnNRYLztA/company-logo_200_200/company-logo_200_200/0/1631403389130/skh_emerge_logo?e=2147483647&v=beta&t=QtzqsQ8Fnpz4Q95ZwNgyLqtPilv-8iIQ5AeNVPLeTic" alt="Company Logo" style="max-width: 250px; height: auto;"/>
           </div>
-          
+        
           <h2>Sub- Letter of Intent</h2>
           
           <p>Dear <strong>${name}</strong>,</p>
@@ -135,30 +114,26 @@ function generateHtmlContent(name, position, start_date) {
           <p>We look forward to having you among us in Krishna Group.</p>
           
           <p class="company-name">SKH Group</p>
-      </div> <br><br><br><br>
+      </div>
       
+      <div class="footer">
           <p>*Since this is a digitally generated document, signature and stamp are not required.</p>
           <p>*Appointment letter containing details about CTC will be handed over to you on joining the plant</p>
-
+      </div>
   </body>
   </html>
     `;
-}
+  }
 
-  const options = {
-    format: 'A4',
-    border: {
-      top: '15mm',
-      right: '15mm',
-      bottom: '15mm',
-      left: '15mm'
-    },
-    height: "11.69in",        
-    width: "8.27in",         
-    timeout: 30000,          
-    renderDelay: 1000,       
-    phantomPath: require('phantomjs-prebuilt').path,
-  };
+const options = {
+  format: 'A4',
+  border: {
+    top: '15mm',
+    right: '15mm',
+    bottom: '15mm',
+    left: '15mm'
+  }
+};
 
 async function processCSV(filePath) {
   const results = [];
