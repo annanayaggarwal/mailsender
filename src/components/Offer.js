@@ -86,7 +86,7 @@ const OfferLetterGenerator = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('https://mailsender-5.onrender.com/api/generate-letters', {
+      const response = await fetch('http://localhost:3001/api/generate-letters', {
         method: 'POST',
         body: formData,
       });
@@ -99,7 +99,7 @@ const OfferLetterGenerator = () => {
       const result = await response.json();
       
       // Send emails automatically
-      const emailResponse = await fetch('https://mailsender-5.onrender.com/api/send-emails', {
+      const emailResponse = await fetch('http://localhost:3001/api/send-emails', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

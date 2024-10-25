@@ -15,18 +15,28 @@ app.use(express.json());
 const upload = multer({ dest: 'uploads/' });
 
 function convertHtmlToPdf(htmlContent, options = {}) {
-  return new Promise((resolve, reject) => {
-    pdf.create(htmlContent, options).toBuffer((error, buffer) => {
-      if (error) {
-        console.error('Error generating PDF:', error);
-        reject(error);
-      } else {
-        console.log('PDF generated successfully in memory');
-        resolve(buffer);
-      }
+    return new Promise((resolve, reject) => {
+      const pdfOptions = {
+        ...options,
+        timeout: 30000,
+        childProcessOptions: {
+          env: {
+            OPENSSL_CONF: '/dev/null',
+          },
+        }
+      };
+  
+      pdf.create(htmlContent, pdfOptions).toBuffer((error, buffer) => {
+        if (error) {
+          console.error('Error generating PDF:', error);
+          reject(error);
+        } else {
+          console.log('PDF generated successfully in memory');
+          resolve(buffer);
+        }
+      });
     });
-  });
-}
+  }
 
 function generateHtmlContent(name, position, start_date) {
     return `
@@ -38,74 +48,69 @@ function generateHtmlContent(name, position, start_date) {
       <title>Letter of Intent</title>
       <style>
           @page {
-              size: A4;
+              size: A4 portrait;
               margin: 0;
+          }
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
           }
           body {
               font-family: Arial, sans-serif;
-              line-height: 1.6;
-              font-size: 14px;
-              margin: 0;
-              padding: 20px;
-              max-width: 210mm;  /* A4 width */
-              min-height: 297mm; /* A4 height */
-              box-sizing: border-box;
-          }
-          .content {
+              line-height: 1.4;
+              font-size: 12px;
+              width: 210mm;
+              height: 297mm;
               padding: 20px;
               position: relative;
+              background: white;
+          }
+          .content {
+              padding: 10px;
           }
           h2 {
               color: #333;
               text-align: center;
-              font-size: 24px;
-              margin: 20px 0;
+              font-size: 20px;
+              margin: 15px 0;
           }
           p {
-              margin-bottom: 15px;
+              margin-bottom: 10px;
           }
           ul {
-              margin-bottom: 15px;
+              margin: 10px 0;
               padding-left: 20px;
           }
           .logo {
               text-align: center;
-              margin-bottom: 30px;
+              margin-bottom: 20px;
           }
           .logo img {
-              max-width: 200px;
+              max-width: 150px;
               height: auto;
-              display: inline-block;
-          }
-          .date {
-              text-align: right;
-              margin-bottom: 30px;
-              font-size: 16px;
           }
           .footer {
-              padding: 10px 20px;
-              font-size: 11px;
               position: absolute;
               bottom: 20px;
-              left: 0;
-              right: 0;
+              left: 20px;
+              right: 20px;
+              font-size: 10px;
           }
           .company-name {
-              font-size: 18px;
+              font-size: 16px;
               font-weight: bold;
-              margin-top: 30px;
+              margin-top: 20px;
           }
-          /* Force single page */
-          .page-break {
-              page-break-after: always;
-              display: none;
+          strong {
+              font-weight: bold;
           }
       </style>
   </head>
   <body>
       <div class="content">
           <div class="logo">
-              <img src="data:image/png;base64,YOUR_BASE64_ENCODED_LOGO" alt="Company Logo"/>
+              <img src="https://media.licdn.com/dms/image/v2/C510BAQEKkTnNRYLztA/company-logo_200_200/company-logo_200_200/0/1631403389130/skh_emerge_logo?e=2147483647&v=beta&t=QtzqsQ8Fnpz4Q95ZwNgyLqtPilv-8iIQ5AeNVPLeTic" alt="Company Logo" style="max-width: 250px; height: auto;"/>
           </div>
           
           <h2>Sub- Letter of Intent</h2>
@@ -130,12 +135,11 @@ function generateHtmlContent(name, position, start_date) {
           <p>We look forward to having you among us in Krishna Group.</p>
           
           <p class="company-name">SKH Group</p>
-      </div>
+      </div> <br><br><br><br>
       
-      <div class="footer">
           <p>*Since this is a digitally generated document, signature and stamp are not required.</p>
           <p>*Appointment letter containing details about CTC will be handed over to you on joining the plant</p>
-      </div>
+
   </body>
   </html>
     `;
