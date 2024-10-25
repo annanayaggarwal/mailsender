@@ -125,15 +125,20 @@ function generateHtmlContent(name, position, start_date) {
     `;
   }
 
-const options = {
-  format: 'A4',
-  border: {
-    top: '15mm',
-    right: '15mm',
-    bottom: '15mm',
-    left: '15mm'
-  }
-};
+  const options = {
+    format: 'A4',
+    border: {
+      top: '15mm',
+      right: '15mm',
+      bottom: '15mm',
+      left: '15mm'
+    },
+    height: "11.69in",        
+    width: "8.27in",         
+    timeout: 30000,          
+    renderDelay: 1000,       
+    phantomPath: require('phantomjs-prebuilt').path,
+  };
 
 async function processCSV(filePath) {
   const results = [];
@@ -177,7 +182,7 @@ Anshika Khurana<br>
   let info = await transporter.sendMail({
     from: '"Factorykaam" <anshika@factorykaam.com>',
     to: email,
-    cc: ["annanay@factorykaam.com","kshitij@factorykaam.com","ridhi@factorykaam.com","anshika@factorykaam.com"],
+    cc: ["annanay@factorykaam.com"],
     subject: subject,
     html: emailHtml,
     attachments: [
