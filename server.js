@@ -37,61 +37,77 @@ function generateHtmlContent(name, position, start_date) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Letter of Intent</title>
       <style>
+          @page {
+              size: A4;
+              margin: 0;
+          }
           body {
               font-family: Arial, sans-serif;
-              line-height: 1.8;
-              font-size: 16px;
+              line-height: 1.6;
+              font-size: 14px;
               margin: 0;
-              padding: 0;
-              min-height: 100vh;
-              display: flex;
-              flex-direction: column;
+              padding: 20px;
+              max-width: 210mm;  /* A4 width */
+              min-height: 297mm; /* A4 height */
+              box-sizing: border-box;
           }
           .content {
-              padding: 40px;
-              flex-grow: 1;
+              padding: 20px;
+              position: relative;
           }
           h2 {
               color: #333;
               text-align: center;
-              font-size: 28px;
-              margin-top: 40px;
-              margin-bottom: 40px;
+              font-size: 24px;
+              margin: 20px 0;
           }
           p {
-              margin-bottom: 25px;
+              margin-bottom: 15px;
           }
           ul {
-              margin-bottom: 25px;
-              padding-left: 40px;
+              margin-bottom: 15px;
+              padding-left: 20px;
           }
           .logo {
               text-align: center;
-              margin-bottom: 50px;
+              margin-bottom: 30px;
+          }
+          .logo img {
+              max-width: 200px;
+              height: auto;
+              display: inline-block;
           }
           .date {
               text-align: right;
-              margin-bottom: 50px;
-              font-size: 18px;
+              margin-bottom: 30px;
+              font-size: 16px;
           }
           .footer {
-              padding: 10px 40px;
-              font-size: 12px;
-              margin-top: auto;
+              padding: 10px 20px;
+              font-size: 11px;
+              position: absolute;
+              bottom: 20px;
+              left: 0;
+              right: 0;
           }
           .company-name {
-              font-size: 20px;
+              font-size: 18px;
               font-weight: bold;
-              margin-top: 40px;
+              margin-top: 30px;
+          }
+          /* Force single page */
+          .page-break {
+              page-break-after: always;
+              display: none;
           }
       </style>
   </head>
   <body>
       <div class="content">
           <div class="logo">
-              <img src="https://media.licdn.com/dms/image/v2/C510BAQEKkTnNRYLztA/company-logo_200_200/company-logo_200_200/0/1631403389130/skh_emerge_logo?e=2147483647&v=beta&t=QtzqsQ8Fnpz4Q95ZwNgyLqtPilv-8iIQ5AeNVPLeTic" alt="Company Logo" style="max-width: 250px; height: auto;"/>
+              <img src="data:image/png;base64,YOUR_BASE64_ENCODED_LOGO" alt="Company Logo"/>
           </div>
-        
+          
           <h2>Sub- Letter of Intent</h2>
           
           <p>Dear <strong>${name}</strong>,</p>
@@ -123,7 +139,7 @@ function generateHtmlContent(name, position, start_date) {
   </body>
   </html>
     `;
-  }
+}
 
   const options = {
     format: 'A4',
